@@ -2,11 +2,37 @@ import Head from 'next/head'
 import styled from 'styled-components'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 export default function Home() {
   const [mood, setMood] = useState(5)
   const [image, setImage] = useState('/neutral.gif')
   const [moodText, setMoodText] = useState('Neutral')
+  const [loading, setLoading] = useState(false)
+  const [movie, setMovie] = useState({})
+
+  const request = async () => {
+    setLoading(true)
+
+    const response = await axios.post(
+      '/api/generate',
+      { mood, movie },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    const movieName = response?.data.result?.content.split('"')[1]
+    if (movieName.length > 0) {
+      const response = await axios.post(
+        `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDb_API_KEY}&t=${movieName}`
+      )
+      console.log(response.data)
+      setMovie(response.data)
+    }
+    setLoading(false)
+  }
 
   useEffect(() => {
     setImage(changeImage(mood))
@@ -49,27 +75,34 @@ export default function Home() {
       <MainContainer>
         <Container>
           <h1>Suggest Me A Movie</h1>
-          <>
-            <Paragraph>How are you feeling today?</Paragraph>
-            <Paragraph>Rate your mood between 0-10</Paragraph>
-            <Content>
-              <ImageContainer src={image} alt="Emoji" width={250} height={300} />
-              <RangeInput
-                mood={mood}
-                min={0}
-                max={10}
-                onChange={e => setMood(e.target.value)}
-                type="range"
-              />
+          {loading ? (
+            <Loading />
+          ) : movie.Title ? (
+            <>{movie.Title}</>
+          ) : (
+            <>
+              <Paragraph>How are you feeling today?</Paragraph>
+              <Paragraph>Rate your mood between 0-10</Paragraph>
+              <Content>
+                <ImageContainer src={image} alt="Emoji" width={250} height={300} />
+                <RangeInput
+                  mood={mood}
+                  min={0}
+                  max={10}
+                  value={mood}
+                  onChange={e => setMood(e.target.value)}
+                  type="range"
+                />
+                <Mood mood={mood}>{mood}</Mood>
+                <MoodText mood={mood}>{moodText}</MoodText>
+                <p>{movie.Title}</p>
 
-              <MoodText mood={mood}>
-                {moodText}
-                <Mood>{mood}</Mood>
-              </MoodText>
-
-              <SuggestButton>Suggest Me!</SuggestButton>
-            </Content>
-          </>
+                <SuggestButton disabled={loading} onClick={request}>
+                  Suggest Me!
+                </SuggestButton>
+              </Content>
+            </>
+          )}
         </Container>
       </MainContainer>
     </>
@@ -87,10 +120,28 @@ const colorPicker = mood => {
     ? '#ff11ef'
     : '#ff0a0a'
 }
+const Loading = styled.div`
+  border: 15px solid #f3f3f3;
+  border-top: 15px solid #000000;
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  margin: 5rem auto;
+  animation: spin 1s linear infinite;
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`
 const Paragraph = styled.p`
   margin: 0;
 `
-const Mood = styled.h3`
+const Mood = styled.h2`
+  color: ${props => colorPicker(props.mood)};
   margin: 0;
 `
 
@@ -168,6 +219,7 @@ const Content = styled.div`
 `
 const Container = styled.div`
   text-align: center;
+  position: relative;
   margin: 20px 0;
   h1 {
     font-size: 3rem;
