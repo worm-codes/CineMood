@@ -26,7 +26,7 @@ export default function Home() {
     const movieName = response?.data.result?.content.split('"')[1]
     if (movieName.length > 0) {
       const response = await axios.post(
-        `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDb_API_KEY}&t=${movieName}`
+        `https://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDb_API_KEY}&t=${movieName}`
       )
       console.log(response.data)
       setMovie(response.data)
