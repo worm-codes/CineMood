@@ -1,6 +1,6 @@
 # CineMood - A Movie Recommendation Application
 
-CineMood is a web application that provides personalized movie recommendations based on the user's mood. The user selects their mood on a scale of 0-10, and CineMood uses OpenAI and omdbAPI to generate a list of movie recommendations that match the user's mood.
+CineMood is a web application that provides personalized movie recommendations based on the user's mood. The user selects their mood on a scale of 0-10, and CineMood uses OpenAI and omdbAPI to generate a of movie recommendation that match the user's mood.
 
 ## Tech Stack
 
@@ -16,23 +16,23 @@ CineMood was built with the following technologies:
 To get started with CineMood, follow these steps:
 
 1. Clone the repository onto your local machine.
-2. Install the dependencies using `npm install`.
+2. Install the dependencies using `yarn`.
 3. Create an account with OpenAI to obtain an API key.
 4. Create an account with omdbAPI to obtain an API key.
 5. Create a `.env.local` file in the root directory of the project and add the following environment variables:
    OPENAI_API_KEY=<your_OpenAI_API_KEY>
    NEXT_PUBLIC_OMDb_API_KEY=<your_NEXT_PUBLIC_OMDb_API_KEY>
-6. Start the development server using `npm run dev`.
+6. Start the development server using `yarn dev`.
 7. Open your web browser and navigate to `http://localhost:3000/`.
 
 ## Usage
 
 To use CineMood, follow these steps:
 
-1. Navigate to the homepage of the application.
-2. Move the slider to select your mood on a scale of 0-10.
-3. Click the "Get CineMood" button to generate a list of movie recommendations that match your mood.
-4. Click on any movie in the list to view additional details about the movie, including its rating, release year, and plot summary.
+1. Move the slider to select your mood on a scale of 0-10.
+2. Click the "Suggest Me!" button to generate a movie recommendation that match your mood.
+3. After you clicked the button,you can view additional details about the movie, including its rating, genre, Rotten Tomatoes ratinh, IMDB rating, runtime, release year, and plot summary.
+4. You can also click the IMDB icon to view the movie on IMDB.
 
 ## TODO
 
