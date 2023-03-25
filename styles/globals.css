@@ -1,0 +1,22 @@
+/* Set default box sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin and padding */
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Set base font size and line height */
+html {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Set base font family and color */
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
