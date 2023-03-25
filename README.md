@@ -1,38 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CineMood - A Movie Recommendation Application
+
+CineMood is a web application that provides personalized movie recommendations based on the user's mood. The user selects their mood on a scale of 0-10, and CineMood uses OpenAI and omdbAPI to generate a list of movie recommendations that match the user's mood.
+
+## Tech Stack
+
+CineMood was built with the following technologies:
+
+- Next.js - a React framework for building server-side rendered (SSR) applications
+- OpenAI - an artificial intelligence research laboratory consisting of the for-profit corporation OpenAI LP and its parent company, the non-profit OpenAI Inc.
+- omdbAPI - an API that provides access to movie and TV show data
+- styled-components - a CSS-in-JS library that allows you to write actual CSS code to style your components
 
 ## Getting Started
 
-First, run the development server:
+To get started with CineMood, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+1. Clone the repository onto your local machine.
+2. Install the dependencies using `npm install`.
+3. Create an account with OpenAI to obtain an API key.
+4. Create an account with omdbAPI to obtain an API key.
+5. Create a `.env.local` file in the root directory of the project and add the following environment variables:
+   OPENAI_API_KEY=<your_OpenAI_API_KEY>
+   NEXT_PUBLIC_OMDb_API_KEY=<your_NEXT_PUBLIC_OMDb_API_KEY>
+6. Start the development server using `npm run dev`.
+7. Open your web browser and navigate to `http://localhost:3000/`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+To use CineMood, follow these steps:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. Navigate to the homepage of the application.
+2. Move the slider to select your mood on a scale of 0-10.
+3. Click the "Get CineMood" button to generate a list of movie recommendations that match your mood.
+4. Click on any movie in the list to view additional details about the movie, including its rating, release year, and plot summary.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## TODO
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Mobile responsiveness
+2. Add more movie details
+3. Add more movie recommendations
+4. Add more moods
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+If you would like to contribute to CineMood, please follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Implement your changes.
+4. Submit a pull request.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contact
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If you have any questions or feedback about CineMood, please contact me at [oguzhan728@gmail.com](mailto:oguzhan728@gmail.com).
