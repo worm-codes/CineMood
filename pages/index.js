@@ -49,19 +49,27 @@ export default function Home() {
       <MainContainer>
         <Container>
           <h1>Suggest Me A Movie</h1>
-          <p>Movie suggestion app according to your mood.</p>
-          <Content>
-            <ImageContainer src={image} alt="Emoji" width={250} height={300} />
-            <RangeInput
-              mood={mood}
-              min={0}
-              max={10}
-              onChange={e => setMood(e.target.value)}
-              type="range"
-            />
+          <>
+            <Paragraph>How are you feeling today?</Paragraph>
+            <Paragraph>Rate your mood between 0-10</Paragraph>
+            <Content>
+              <ImageContainer src={image} alt="Emoji" width={250} height={300} />
+              <RangeInput
+                mood={mood}
+                min={0}
+                max={10}
+                onChange={e => setMood(e.target.value)}
+                type="range"
+              />
 
-            <MoodText mood={mood}>{moodText}</MoodText>
-          </Content>
+              <MoodText mood={mood}>
+                {moodText}
+                <Mood>{mood}</Mood>
+              </MoodText>
+
+              <SuggestButton>Suggest Me!</SuggestButton>
+            </Content>
+          </>
         </Container>
       </MainContainer>
     </>
@@ -79,13 +87,36 @@ const colorPicker = mood => {
     ? '#ff11ef'
     : '#ff0a0a'
 }
+const Paragraph = styled.p`
+  margin: 0;
+`
+const Mood = styled.h3`
+  margin: 0;
+`
+
+const SuggestButton = styled.button`
+  background-color: #000;
+  color: #fff;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 1s;
+  &:hover {
+    background-color: #fff;
+    color: #000;
+  }
+`
 const MoodText = styled.h3`
   width: 200px;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
   color: ${props => colorPicker(props.mood)};
   transition: color 1s;
   font-size: 1.5rem;
   font-weight: 400;
+  margin: 0;
 `
 const RangeInput = styled.input`
   &::-webkit-slider-thumb {
