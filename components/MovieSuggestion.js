@@ -48,7 +48,7 @@ const MovieSuggestion = ({ mood, loading, handleMood, request }) => {
       <Paragraph>How are you feeling today?</Paragraph>
       <Paragraph>Rate your mood between 0-10</Paragraph>
       <Content>
-        <ImageContainer src={image} alt="Emoji" width={250} height={300} />
+        <ImageContainer src={image} alt="Emoji" width={250} height={250} />
         <RangeInput
           mood={mood}
           min={0}
@@ -63,6 +63,13 @@ const MovieSuggestion = ({ mood, loading, handleMood, request }) => {
         <SuggestButton disabled={loading} onClick={request}>
           Suggest Me!
         </SuggestButton>
+        <a
+          href="https://github.com/worm-codes/CineMood"
+          target="_newblank"
+          rel="noreferrer noopener"
+        >
+          <img src="./Icon/github.png" alt="github" width={58} />
+        </a>
       </Content>
     </>
   )

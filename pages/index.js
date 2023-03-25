@@ -76,6 +76,7 @@ export default function Home() {
   )
 }
 const Brand = styled.h1`
+  margin-bottom: 1rem;
   color: rgb(255, 0, 0); /* starting color is red */
   animation: colorChange 8s infinite;
   @keyframes colorChange {
