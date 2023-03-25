@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Suggest Me Movie</title>
+        <title>CineMood</title>
         <meta name="description" content="Movie suggestion app based on your mood." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
