@@ -14,28 +14,31 @@ export default function Home() {
   const request = async () => {
     setLoading(true)
 
-    // const response = await axios.post(
-    //   '/api/generate',
-    //   { mood, movie: movie.Title },
-    //   {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //   }
-    // )
-    // const movieName = response?.data.result?.content.split('"')[1]
-    // if (movieName.length > 0) {
-    //   const response = await axios.post(
-    //     `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDb_API_KEY}&t=${movieName}`
-    //   )
-    //   console.log(response.data)
-    //   setMovie(response.data)
-    // }
+    const response = await axios.post(
+      '/api/generate',
+      { mood, movie: movie.Title },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    const movieName = response?.data.result?.content.split('"')[1]
+    if (movieName.length > 0) {
+      const response = await axios.post(
+        `http://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDb_API_KEY}&t=${movieName}`
+      )
+      console.log(response.data)
+      setMovie(response.data)
+    }
     setLoading(false)
   }
 
   const handleMood = mood => {
     setMood(mood)
+  }
+  const resetMovie = () => {
+    setMovie({})
   }
 
   return (
@@ -52,9 +55,13 @@ export default function Home() {
         <Container>
           <h1>Suggest Me A Movie</h1>
           {loading ? (
-            <Loading />
+            <>
+              <Loading />
+              <h2>Go get some snacks</h2>
+              <h2> While I am searching...</h2>
+            </>
           ) : movie.Title ? (
-            <MovieDetail movie={movie} />
+            <MovieDetail resetMovie={resetMovie} movie={movie} />
           ) : (
             <MovieSuggestion
               mood={mood}
@@ -80,7 +87,6 @@ const Container = styled.div`
   h1 {
     font-size: 3rem;
     font-weight: 700;
-    margin-bottom: 10px;
   }
   p {
     font-size: 1.5rem;

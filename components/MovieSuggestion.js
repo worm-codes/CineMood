@@ -14,7 +14,7 @@ const colorPicker = mood => {
 }
 
 const MovieSuggestion = ({ mood, loading, handleMood, request }) => {
-  const [image, setImage] = useState('/neutral.gif')
+  const [image, setImage] = useState('/emojis/neutral.gif')
   const [moodText, setMoodText] = useState('Neutral')
   useEffect(() => {
     setImage(changeImage(mood))
@@ -24,23 +24,23 @@ const MovieSuggestion = ({ mood, loading, handleMood, request }) => {
     if (mood < 3) {
       //depressed
       setMoodText('Depressed')
-      return '/depressed.gif'
+      return '/emojis/depressed.gif'
     } else if (mood < 5) {
       //bored
       setMoodText('Bored')
-      return '/bored.gif'
+      return '/emojis/bored.gif'
     } else if (mood == 5) {
       //neutral
       setMoodText('Neutral')
-      return '/neutral.gif'
+      return '/emojis/neutral.gif'
     } else if (6 <= mood && mood < 8) {
       //happy
       setMoodText('Happy')
-      return '/happy.gif'
+      return '/emojis/happy.gif'
     } else if (8 <= mood) {
       //excited
       setMoodText('Excited')
-      return '/excited.gif'
+      return '/emojis/excited.gif'
     }
   }
   return (
