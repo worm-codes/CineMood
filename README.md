@@ -1,6 +1,7 @@
 # CineMood - A Movie Recommendation Application
 
 CineMood is a web application that provides personalized movie recommendations based on the user's mood. The user selects their mood on a scale of 0-10, and CineMood uses OpenAI and omdbAPI to generate a of movie recommendation that match the user's mood.
+PS: This project is still in development. Also, it is free and limited, so please don't abuse it.
 
 ## Tech Stack
 
