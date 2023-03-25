@@ -45,7 +45,7 @@ export default function Home() {
     <>
       <Head>
         <title>Suggest Me Movie</title>
-        <meta name="description" content="Movie suggestion app according to your mood." />
+        <meta name="description" content="Movie suggestion app based on your mood." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <link rel="icon" href="/favicon.ico" />
@@ -53,7 +53,7 @@ export default function Home() {
 
       <MainContainer>
         <Container>
-          <h1>Suggest Me A Movie</h1>
+          <Brand>CineMood</Brand>
           {loading ? (
             <>
               <Loading />
@@ -75,6 +75,27 @@ export default function Home() {
     </>
   )
 }
+const Brand = styled.h1`
+  color: rgb(255, 0, 0); /* starting color is red */
+  animation: colorChange 8s infinite;
+  @keyframes colorChange {
+    0% {
+      color: rgb(255, 0, 0); /* red */
+    }
+    25% {
+      color: rgb(0, 255, 0); /* green */
+    }
+    50% {
+      color: rgb(0, 0, 255); /* blue */
+    }
+    75% {
+      color: rgb(255, 255, 0); /* yellow */
+    }
+    100% {
+      color: rgb(255, 0, 255); /* magenta */
+    }
+  }
+`
 const MainContainer = styled.main`
   max-width: 1200px;
   margin: 0 auto;
