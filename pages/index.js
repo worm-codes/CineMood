@@ -16,7 +16,7 @@ export default function Home() {
 
     const response = await axios.post(
       '/api/generate',
-      { mood, movie },
+      { mood, movie: movie.Title },
       {
         headers: {
           'Content-Type': 'application/json',
