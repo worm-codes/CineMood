@@ -68,7 +68,9 @@ export default function Home() {
 
       <MainContainer>
         <Container>
-          <Brand>CineMood</Brand>
+          <div>
+            <Brand>CineMood</Brand>
+          </div>
           {loading ? (
             <>
               <Loading />
@@ -118,11 +120,17 @@ const MainContainer = styled.main`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 const Container = styled.div`
   text-align: center;
   position: relative;
-  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   h1 {
     font-size: 3rem;
     font-weight: 700;

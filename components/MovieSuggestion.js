@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import styled from 'styled-components'
+import { useResponsive } from 'hooks'
 const colorPicker = mood => {
   return mood < 3
     ? '#00d0fd'
@@ -16,7 +17,21 @@ const colorPicker = mood => {
 const MovieSuggestion = ({ mood, loading, handleMood, request, errMovieDB, errOpenAI }) => {
   const [image, setImage] = useState('/emojis/neutral.gif')
   const [moodText, setMoodText] = useState('Neutral')
+  const { isTablet, isLaptop, isWideScreen, isDesktop } = useResponsive()
   const thereIsError = errMovieDB?.length > 0 || errOpenAI?.length > 0
+
+  const declarePixel = () => {
+    if (isWideScreen) {
+      return 350
+    } else if (isDesktop) {
+      return 300
+    } else if (isLaptop) {
+      return 250
+    } else if (isTablet) {
+      return 200
+    }
+    return 180
+  }
   useEffect(() => {
     setImage(changeImage(mood))
   }, [mood])
@@ -45,11 +60,11 @@ const MovieSuggestion = ({ mood, loading, handleMood, request, errMovieDB, errOp
     }
   }
   return (
-    <>
+    <div>
       <Paragraph>How are you feeling today?</Paragraph>
       <Paragraph>Rate your mood between 0-10</Paragraph>
-      <Content>
-        <ImageContainer src={image} alt="Emoji" width={250} height={250} />
+      <Content gap={isDesktop ? '0.6rem' : 'unset'}>
+        <ImageContainer src={image} alt="Emoji" width={declarePixel()} height={declarePixel()} />
         <RangeInput
           mood={mood}
           min={0}
@@ -79,7 +94,7 @@ const MovieSuggestion = ({ mood, loading, handleMood, request, errMovieDB, errOp
           <img src="./Icon/github.png" alt="github" width={58} />
         </a>
       </Content>
-    </>
+    </div>
   )
 }
 
@@ -149,7 +164,8 @@ const RangeInput = styled.input`
   appearance: none;
   -webkit-appearance: none;
   outline: none;
-  width: 40%;
+  width: 100%;
+  max-width: 380px;
   height: 20px;
   border-radius: 5px;
   background: ${props => colorPicker(props.mood)};
@@ -157,7 +173,6 @@ const RangeInput = styled.input`
 `
 const ImageContainer = styled(Image)`
   object-fit: contain;
-  margin-right: 1rem;
 `
 
 const Content = styled.div`
@@ -165,4 +180,5 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: ${props => props.gap};
 `
