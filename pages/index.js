@@ -46,7 +46,6 @@ export default function Home() {
       }
     } catch (err) {
       setErrMovieDB(err?.response?.data?.Error)
-      setLoading(false)
     }
   }
 
