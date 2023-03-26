@@ -13,9 +13,10 @@ const colorPicker = mood => {
     : '#ff0a0a'
 }
 
-const MovieSuggestion = ({ mood, loading, handleMood, request }) => {
+const MovieSuggestion = ({ mood, loading, handleMood, request, errMovieDB, errOpenAI }) => {
   const [image, setImage] = useState('/emojis/neutral.gif')
   const [moodText, setMoodText] = useState('Neutral')
+  const thereIsError = errMovieDB?.length > 0 || errOpenAI?.length > 0
   useEffect(() => {
     setImage(changeImage(mood))
   }, [mood])
@@ -60,9 +61,16 @@ const MovieSuggestion = ({ mood, loading, handleMood, request }) => {
         <Mood mood={mood}>{mood}</Mood>
         <MoodText mood={mood}>{moodText}</MoodText>
 
-        <SuggestButton disabled={loading} onClick={request}>
-          Suggest Me!
-        </SuggestButton>
+        {thereIsError ? (
+          <ErrorContainer>
+            {errOpenAI && <Error>OpenAI Error:{errOpenAI}</Error>}
+            {errMovieDB && <Error>MovieDB Error:{errMovieDB}</Error>}
+          </ErrorContainer>
+        ) : (
+          <SuggestButton disabled={loading} onClick={request}>
+            Suggest Me!
+          </SuggestButton>
+        )}
         <a
           href="https://github.com/worm-codes/CineMood"
           target="_newblank"
@@ -76,9 +84,15 @@ const MovieSuggestion = ({ mood, loading, handleMood, request }) => {
 }
 
 export default MovieSuggestion
+const ErrorContainer = styled.div`
+  max-width: 1040px;
+`
 
 const Paragraph = styled.p`
   margin: 0;
+`
+const Error = styled.h2`
+  color: red;
 `
 const Mood = styled.h2`
   color: ${props => colorPicker(props.mood)};

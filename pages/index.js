@@ -10,28 +10,44 @@ export default function Home() {
 
   const [loading, setLoading] = useState(false)
   const [movie, setMovie] = useState({})
+  const [errOpenAI, setErrOpenAI] = useState('')
+  const [errMovieDB, setErrMovieDB] = useState('')
 
   const request = async () => {
     setLoading(true)
 
-    const response = await axios.post(
-      '/api/generate',
-      { mood, movie: movie.Title },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-    const movieName = response?.data.result?.content.split('"')[1]
-    if (movieName.length > 0) {
+    try {
       const response = await axios.post(
-        `https://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDb_API_KEY}&t=${movieName}`
+        '/api/generate',
+        { mood, movie: movie.Title },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       )
-      console.log(response.data)
-      setMovie(response.data)
+      requestMovieDB(response?.data.result?.content.split('"')[1])
+    } catch (err) {
+      setErrOpenAI(err?.response?.data?.error?.message)
+      setLoading(false)
     }
+
     setLoading(false)
+  }
+
+  const requestMovieDB = async movieName => {
+    try {
+      if (movieName.length > 0) {
+        const response = await axios.post(
+          `https://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDb_API_KEY}&t=${movieName}`
+        )
+
+        setMovie(response.data)
+      }
+    } catch (err) {
+      setErrMovieDB(err?.response?.data?.Error)
+      setLoading(false)
+    }
   }
 
   const handleMood = mood => {
@@ -64,6 +80,8 @@ export default function Home() {
             <MovieDetail resetMovie={resetMovie} movie={movie} />
           ) : (
             <MovieSuggestion
+              errOpenAI={errOpenAI}
+              errMovieDB={errMovieDB}
               mood={mood}
               loading={loading}
               request={request}
