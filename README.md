@@ -21,8 +21,8 @@ To get started with CineMood, follow these steps:
 3. Create an account with OpenAI to obtain an API key.
 4. Create an account with omdbAPI to obtain an API key.
 5. Create a `.env.local` file in the root directory of the project and add the following environment variables:
-   OPENAI_API_KEY=<your_OpenAI_API_KEY>
-   NEXT_PUBLIC_OMDb_API_KEY=<your_NEXT_PUBLIC_OMDb_API_KEY>
+ - OPENAI_API_KEY=<your_OpenAI_API_KEY>
+ - NEXT_PUBLIC_OMDb_API_KEY=<your_NEXT_PUBLIC_OMDb_API_KEY>
 6. Start the development server using `yarn dev`.
 7. Open your web browser and navigate to `http://localhost:3000/`.
 
