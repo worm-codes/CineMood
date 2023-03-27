@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { useResponsive } from 'hooks'
 const colorPicker = mood => {
   return mood < 3
@@ -14,7 +14,15 @@ const colorPicker = mood => {
     : '#ff0a0a'
 }
 
-const MovieSuggestion = ({ mood, loading, handleMood, request, errMovieDB, errOpenAI }) => {
+const MovieSuggestion = ({
+  mood,
+  handleMood,
+  request,
+  errMovieDB,
+  errOpenAI,
+  isRequestPending,
+  requestCountDown,
+}) => {
   const [image, setImage] = useState('/emojis/neutral.gif')
   const [moodText, setMoodText] = useState('Neutral')
   const { isTablet, isLaptop, isWideScreen, isDesktop } = useResponsive()
@@ -59,6 +67,7 @@ const MovieSuggestion = ({ mood, loading, handleMood, request, errMovieDB, errOp
       return '/emojis/excited.gif'
     }
   }
+
   return (
     <div>
       <Paragraph>How are you feeling today?</Paragraph>
@@ -82,8 +91,12 @@ const MovieSuggestion = ({ mood, loading, handleMood, request, errMovieDB, errOp
             {errMovieDB && <Error>MovieDB Error:{errMovieDB}</Error>}
           </ErrorContainer>
         ) : (
-          <SuggestButton disabled={loading} onClick={request}>
-            Suggest Me!
+          <SuggestButton
+            isRequestPending={isRequestPending}
+            disabled={isRequestPending}
+            onClick={request}
+          >
+            {isRequestPending ? requestCountDown : 'Suggest One'}
           </SuggestButton>
         )}
         <a
@@ -124,10 +137,19 @@ const SuggestButton = styled.button`
   font-weight: 400;
   cursor: pointer;
   transition: background-color 1s;
-  &:hover {
-    background-color: #fff;
-    color: #000;
-  }
+  ${props =>
+    !props.isRequestPending
+      ? css`
+          &:hover {
+            background-color: #fff;
+            color: #000;
+          }
+        `
+      : css`
+          background-color: #ccc;
+          color: #888;
+          cursor: not-allowed;
+        `}
 `
 const MoodText = styled.h3`
   width: 200px;

@@ -39,7 +39,13 @@ const MovieDetail = ({ movie, resetMovie }) => {
             {movie.Plot}
           </p>
         </Plot>
-        <SuggestNewButton onClick={resetMovie}>Suggest New One</SuggestNewButton>
+        <SuggestNewButton
+          onClick={() => {
+            resetMovie(movie)
+          }}
+        >
+          Suggest New One
+        </SuggestNewButton>
       </Informations>
     </Container>
   )

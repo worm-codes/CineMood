@@ -23,8 +23,8 @@ export default async function (req, res) {
       model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: generatePrompt(mood, movie) }],
     })
-
-    res.status(200).json({ result: completion.data.choices[0].message })
+    console.log(completion.data.choices[0].message.content)
+    res.status(200).json({ result: completion.data.choices[0].message.content })
   } catch (error) {
     if (error.response) {
       console.error(error.response.status, error.response.data)
@@ -43,9 +43,12 @@ export default async function (req, res) {
 function generatePrompt(mood, movie = '') {
   return movie.length !== 0
     ? `Hi ChatGPT, can you recommend 
-  a movie difference than ${movie} based on my current mood? On a scale of 0 to 10,
-   0 is very sad, and 10 is very happy my mood rating is ${mood}. Just Return the movie name.`
-    : `Hi ChatGPT, can you recommend 
-  a movie based on my current mood? On a scale of 0 to 10,
-   0 is very sad, and 10 is very happy my mood rating is ${mood}. Just Return the movie name.`
+  a movie different than ${movie}, based on my current mood? On a scale of 0 to 10, where 0
+   is very sad and 10 is very happy, my mood rating is ${mood}.
+      Please recommend a movie name that you think would be a good fit for my current mood. 
+      I only need the name of the movie, please do not provide any additional details or information.`
+    : `Hi ChatGPT, can you recommend a movie based on my current mood?
+     On a scale of 0 to 10, where 0 is very sad and 10 is very happy, my mood rating is ${mood}.
+      Please recommend a movie name that you think would be a good fit for my current mood. 
+      I only need the name of the movie, please do not provide any additional details or information.`
 }

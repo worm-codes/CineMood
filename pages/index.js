@@ -4,14 +4,19 @@ import styled from 'styled-components'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { MovieDetail, MovieSuggestion } from 'components'
+import { useResponsive } from 'hooks'
 
 export default function Home() {
   const [mood, setMood] = useState(5)
 
   const [loading, setLoading] = useState(false)
   const [movie, setMovie] = useState({})
+  const [lastMovie, setLastMovie] = useState({})
   const [errOpenAI, setErrOpenAI] = useState('')
   const [errMovieDB, setErrMovieDB] = useState('')
+  const [isRequestPending, setIsRequestPending] = useState(false)
+  const { isTablet } = useResponsive()
+  const [requestCountDown, setRequestCountDown] = useState(10)
 
   const request = async () => {
     setLoading(true)
@@ -19,14 +24,25 @@ export default function Home() {
     try {
       const response = await axios.post(
         '/api/generate',
-        { mood, movie: movie.Title },
+        { mood, movie: lastMovie.Title },
         {
           headers: {
             'Content-Type': 'application/json',
           },
         }
       )
-      requestMovieDB(response?.data.result?.content.split('"')[1])
+      if (response?.data.result?.includes('"')) {
+        const movieNameToSearch = response?.data?.result
+          ?.split('"')[1]
+          .replaceAll(' ', '+')
+          .replaceAll('.', '')
+
+        await requestMovieDB(movieNameToSearch)
+      } else {
+        const movieNameToSearch = response?.data.result?.replaceAll(' ', '+').replaceAll('.', '')
+
+        await requestMovieDB(movieNameToSearch)
+      }
     } catch (err) {
       setErrOpenAI(err?.response?.data?.error?.message)
       setLoading(false)
@@ -35,14 +51,34 @@ export default function Home() {
     setLoading(false)
   }
 
+  useEffect(() => {
+    if (setIsRequestPending) {
+      const countdownInterval = setInterval(() => {
+        setRequestCountDown(countdown => countdown - 1)
+      }, 1000)
+
+      if (requestCountDown === 0) {
+        clearInterval(countdownInterval)
+        setRequestCountDown(10)
+        setIsRequestPending(false)
+      }
+
+      return () => clearInterval(countdownInterval)
+    }
+  }, [requestCountDown, setIsRequestPending])
+
   const requestMovieDB = async movieName => {
     try {
       if (movieName.length > 0) {
+        if (movieName.includes('.')) {
+          movieName.pop()
+        }
         const response = await axios.post(
           `https://www.omdbapi.com/?apikey=${process.env.NEXT_PUBLIC_OMDb_API_KEY}&t=${movieName}`
         )
-
+        setIsRequestPending(true)
         setMovie(response.data)
+        startCountdown()
       }
     } catch (err) {
       setErrMovieDB(err?.response?.data?.Error)
@@ -52,7 +88,8 @@ export default function Home() {
   const handleMood = mood => {
     setMood(mood)
   }
-  const resetMovie = () => {
+  const resetMovie = movie => {
+    setLastMovie(movie)
     setMovie({})
   }
 
@@ -73,7 +110,7 @@ export default function Home() {
           </div>
           {loading ? (
             <>
-              <Loading />
+              <Loading isTablet={isTablet} />
               <h2>Go get some snacks</h2>
               <h2> While I am searching...</h2>
             </>
@@ -81,6 +118,8 @@ export default function Home() {
             <MovieDetail resetMovie={resetMovie} movie={movie} />
           ) : (
             <MovieSuggestion
+              requestCountDown={requestCountDown}
+              isRequestPending={isRequestPending}
               errOpenAI={errOpenAI}
               errMovieDB={errMovieDB}
               mood={mood}
@@ -145,8 +184,8 @@ const Loading = styled.div`
   border: 15px solid #f3f3f3;
   border-top: 15px solid #000000;
   border-radius: 50%;
-  width: 250px;
-  height: 250px;
+  width: ${props => (!props.isTablet ? '150px' : '250px')};
+  height: ${props => (!props.isTablet ? '150px' : '250px')};
   margin: 5rem auto;
   animation: spin 1s linear infinite;
   @keyframes spin {
