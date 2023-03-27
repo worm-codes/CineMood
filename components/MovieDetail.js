@@ -16,12 +16,12 @@ const MovieDetail = ({ movie, resetMovie }) => {
         </GeneralInfo>
         <GeneralInfo>
           {movie?.Ratings[1]?.Source === 'Rotten Tomatoes' && (
-            <div>
+            <InfoContainer>
               <img src="./Icon/rotten.svg" alt="Rotten Tomatoes" />
               <h2>{movie?.Ratings[1]?.Value}</h2>
-            </div>
+            </InfoContainer>
           )}
-          <div>
+          <InfoContainer>
             <a
               target="_newblank"
               rel="noreferrer noopener"
@@ -30,7 +30,7 @@ const MovieDetail = ({ movie, resetMovie }) => {
               <img src="./Icon/imdb.svg" />
             </a>
             <h2>{movie?.imdbRating}</h2>
-          </div>
+          </InfoContainer>
           <Info title="Runtime" content={movie.Runtime} />
         </GeneralInfo>
         <h2>
@@ -57,6 +57,14 @@ const Informations = styled.div`
     width: 100%;
   }
 `
+const InfoContainer = styled.div`
+  max-width: 270px;
+  text-align: center;
+  @media (max-width: 768px) {
+    max-width: 700px;
+    width: 50%;
+  }
+`
 
 const GeneralInfo = styled.div`
   display: flex;
@@ -64,7 +72,10 @@ const GeneralInfo = styled.div`
   text-align: center;
   justify-content: space-around;
   @media (max-width: 768px) {
-    font-size: 0.8em;
+    font-size: 0.9em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 `
 

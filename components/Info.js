@@ -17,5 +17,6 @@ const InfoContainer = styled.div`
   text-align: center;
   @media (max-width: 768px) {
     max-width: 400px;
+    width: 50%;
   }
 `
