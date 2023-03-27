@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import { Info } from 'components'
+import { useResponsive } from 'hooks'
 
 const MovieDetail = ({ movie, resetMovie }) => {
+  const { isTablet } = useResponsive()
   return (
     <Container>
       <img src={movie.Poster} alt="movie Poster" />
@@ -50,6 +52,10 @@ const Informations = styled.div`
   flex-direction: column;
   justify-content: space-around;
   width: 66%;
+  gap: 1rem;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 
 const GeneralInfo = styled.div`
@@ -57,12 +63,21 @@ const GeneralInfo = styled.div`
   align-items: center;
   text-align: center;
   justify-content: space-around;
+  @media (max-width: 768px) {
+    font-size: 0.8em;
+  }
 `
 
 const Container = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
 `
 const SuggestNewButton = styled.button`
   width: 300px;
