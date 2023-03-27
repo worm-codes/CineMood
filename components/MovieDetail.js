@@ -33,12 +33,12 @@ const MovieDetail = ({ movie, resetMovie }) => {
           </InfoContainer>
           <Info title="Runtime" content={movie.Runtime} />
         </GeneralInfo>
-        <h2>
+        <Plot>
           <p>
             <b>Plot : </b>
             {movie.Plot}
           </p>
-        </h2>
+        </Plot>
         <SuggestNewButton onClick={resetMovie}>Suggest New One</SuggestNewButton>
       </Informations>
     </Container>
@@ -46,6 +46,15 @@ const MovieDetail = ({ movie, resetMovie }) => {
 }
 
 export default MovieDetail
+const Plot = styled.div`
+  width: 100%;
+  text-align: center;
+  @media (max-width: 768px) {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 400px;
+  }
+`
 
 const Informations = styled.div`
   display: flex;
@@ -68,7 +77,7 @@ const InfoContainer = styled.div`
 
 const GeneralInfo = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   text-align: center;
   justify-content: space-around;
   @media (max-width: 768px) {
@@ -76,6 +85,7 @@ const GeneralInfo = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
   }
 `
 

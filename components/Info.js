@@ -2,7 +2,7 @@ import styled from 'styled-components'
 const Info = ({ title, content }) => {
   return (
     <InfoContainer>
-      <OverlinedHeader>{title}</OverlinedHeader>
+      <OverlinedHeader isItGenre={title === 'Genre'}>{title}</OverlinedHeader>
       <h2>{content}</h2>
     </InfoContainer>
   )
@@ -16,7 +16,7 @@ const InfoContainer = styled.div`
   max-width: 270px;
   text-align: center;
   @media (max-width: 768px) {
-    max-width: 400px;
-    width: 50%;
+    width: 100%;
+    max-width: 500px;
   }
 `
