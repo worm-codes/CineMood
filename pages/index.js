@@ -100,7 +100,7 @@ export default function Home() {
         <meta name="description" content="Movie suggestion app based on your mood." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <MainContainer>
